@@ -1,0 +1,7 @@
+{
+  "name": "IonicOAuthDemo",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}

@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Authentication
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <div *ngIf="initialized">
+    <ion-card>
+      <ion-card-header>
+        ACCESS TOKEN
+      </ion-card-header>
+      <ion-card-content>
+        {{ authData.token }}
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-header>
+        PROFILE FROM IN CLIENT
+      </ion-card-header>
+      <ion-card-content>
+        <p>First name: {{ authData.profile.firstName }}</p>
+        <p>Last name: {{ authData.profile.lastName }}</p>
+        <p>Email: {{ authData.profile.email }}</p>
+        <p>Username: {{ authData.profile.username }}</p>
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-header>
+        PROFILE ON .NET SERVER
+      </ion-card-header>
+      <ion-card-content>
+        <p>First name: {{ authData.profile.firstName }}</p>
+        <p>Last name: {{ authData.profile.lastName }}</p>
+        <p>Email: {{ authData.profile.email }}</p>
+        <p>Username: {{ authData.profile.username }}</p>
+        <button ion-button color="primary" (click)="onGetUserProfileInApiServer()">Get profile .net server</button>
+      </ion-card-content>
+    </ion-card>
+    <div class="authentication-buttons" *ngIf="!authData.token">
+      <button ion-button color="primary" (click)="onLogin()">Login</button>
+      <button ion-button color="primary" (click)="onRegister()">Register</button>
+    </div>
+    <div class="authentication-buttons" *ngIf="authData.token">
+      <button ion-button color="primary" (click)="onLogout()">Logout</button>
+    </div>
+  </div>
+</ion-content>
