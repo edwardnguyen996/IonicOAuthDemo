@@ -1,8 +1,8 @@
 import { Component, OnInit, NgZone } from '@angular/core';
-import { LoadingController } from 'ionic-angular';
+import { LoadingController, Platform } from 'ionic-angular';
 import { AuthService as AppAuthService } from '../../services/auth.app';
 import { AuthService as WebAuthService } from '../../services/auth.web';
-import { Platform } from 'ionic-angular';
+import env from '../../config/env';
 
 @Component({
   selector: 'page-home',
@@ -45,15 +45,20 @@ export class HomePage implements OnInit {
   };
 
   async onGetUserProfileInApiServer() {
+    const loader = this.loadingCtrl.create({
+      content: 'Please wait...',
+      duration: 10000,
+    });
+    await loader.present();
     try {
-      const response = await fetch('http://35.221.221.124:6080/api/me', {
+      const response = await fetch(`${env.serverApiUrl}api/me`, {
         method: 'GET',
         headers: {
           Authorization: `Bearer ${this.authData.token}`,
         },
       });
-      const me = response.json();
-      console.log(me);
+      this.me = await response.json();
+      loader.dismissAll();
     } catch (e) {
       console.log(e);
     }

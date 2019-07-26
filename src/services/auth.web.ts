@@ -1,7 +1,7 @@
 import 'rxjs/add/operator/toPromise';
 declare var Keycloak: any;
 import { Injectable } from '@angular/core';
-import config from './config';
+import env from '../config/env';
 
 @Injectable()
 export class AuthService {
@@ -12,12 +12,12 @@ export class AuthService {
   static async init() {
     return new Promise(resolve => {
       AuthService.keycloak = new Keycloak({
-        url: config.url,
-        realm: config.realm,
-        clientId: config.clientId,
-        responseMode: config.responseMode,
+        url: env.authConfig.url,
+        realm: env.authConfig.realm,
+        clientId: env.authConfig.clientId,
+        responseMode: env.authConfig.responseMode,
         credentials: {
-          secret: config.clientSecret,
+          secret: env.authConfig.clientSecret,
         },
       });
       AuthService.keycloak
@@ -47,8 +47,8 @@ export class AuthService {
       await AuthService.init();
     }
     return AuthService.keycloak.login({
-      redirectUri: config.webRedirect,
-      scope: config.scope,
+      redirectUri: env.authConfig.webRedirect,
+      scope: env.authConfig.scope,
     });
   }
 
@@ -57,8 +57,8 @@ export class AuthService {
       await AuthService.init();
     }
     return AuthService.keycloak.login({
-      redirectUri: config.webRedirect,
-      scope: config.scope,
+      redirectUri: env.authConfig.webRedirect,
+      scope: env.authConfig.scope,
       action: 'register',
     });
   }
